@@ -218,46 +218,4 @@
 		<connection>scm:svn:http://10.18.96.95:8099/svn/cncm/executor/trunk/</connection>
 		<developerConnection>scm:svn:http://10.18.96.95:8099/svn/cncm/executor/trunk/</developerConnection>
 	</scm>
-
-	<!-- maven中心仓库 -->
-	<repositories>
-		<repository>
-			<id>eshore-crm-nexus</id>
-			<name>eshore-crm-nexus</name>
-			<url>http://10.18.97.1:8787/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<!-- maven插件仓库 -->
-	<pluginRepositories>
-		<pluginRepository>
-			<id>eshore-crm-nexus</id>
-			<name>eshore-crm-nexus</name>
-			<url>http://10.18.97.1:8787/nexus/content/groups/public</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<!-- 模块发布仓库 -->
-	<distributionManagement>
-		<repository>
-			<id>eshore-crm-releases</id>
-			<url>http://10.18.97.1:8787/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>eshore-crm-snapshots</id>
-			<url>http://10.18.97.1:8787/nexus/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>
