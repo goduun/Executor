@@ -69,7 +69,7 @@ public abstract class AbstractTaskConverter<C extends Task, P extends Task>
 	/**
 	 * 唤醒祖先任务。
 	 * <p>
-	 * 重载封装了{@link #awake(Task, Task, TaskPipe<P>)}，移除了触发唤醒的任务参数
+	 * 重载封装了{@link #awake(Task, Task, TaskPipe)}，移除了触发唤醒的任务参数
 	 * 
 	 * @param ancestor
 	 *            被唤醒的祖先任务
