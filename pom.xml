@@ -1,18 +1,43 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>com.eshore.crm.cncm</groupId>
+	<groupId>org.goduun</groupId>
 	<artifactId>executor</artifactId>
 	<version>1.0.6-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
 	<name>executor</name>
+	<description>A java concurrent framework.</description>
+	<url>https://github.com/goduun/Executor</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Hu Ruomin</name>
+			<email>huruomin@goduun.org</email>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:https://goduun@github.com/goduun/Executor.git</connection>
+		<developerConnection>scm:git:https://goduun@github.com/goduun/Executor.git</developerConnection>
+		<url>https://goduun@github.com/goduun/Executor.git</url>
+	</scm>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
 	<properties>
-		<!-- commons version define -->
 		<java.version>1.6</java.version>
-
-		<!-- build encoding -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -39,37 +64,9 @@
 		</dependency>
 	</dependencies>
 
-	<!-- 插件配置 -->
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!-- 忽略m2e不支持maven-dependency-plugin:copy-dependencies的BUG -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-dependency-plugin</artifactId>
-										<versionRange>[2.0,)</versionRange>
-										<goals>
-											<goal>copy-dependencies</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-
-				<!-- compiler插件, 设定JDK版本 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -81,47 +78,46 @@
 						<encoding>${project.build.sourceEncoding}</encoding>
 					</configuration>
 				</plugin>
-
-				<!-- test插件 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.12.3</version>
-					<configuration>
-						<includes>
-							<include>**/*Test.java</include>
-						</includes>
-						<junitArtifactName>junit:junit</junitArtifactName>
-					</configuration>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.2.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
-
-				<!-- cobertura插件 -->
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>cobertura-maven-plugin</artifactId>
-					<version>2.5.2</version>
-				</plugin>
-
-				<!-- war插件 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>2.2</version>
-					<configuration>
-						<warName>${project.artifactId}</warName>
-					</configuration>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
-
-				<!-- resource插件, 设定编码 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.6</version>
-					<configuration>
-						<encoding>${project.build.sourceEncoding}</encoding>
-					</configuration>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.5</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
-
 				<!-- jar插件 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -135,21 +131,6 @@
 							</manifest>
 						</archive>
 					</configuration>
-				</plugin>
-
-				<!-- source插件，发布jar时自动将源码发布 -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>2.2</version>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
 				</plugin>
 
 				<!-- clean插件 -->
@@ -173,19 +154,6 @@
 					<version>2.7</version>
 				</plugin>
 
-				<!-- maven-eclipse插件 -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-eclipse-plugin</artifactId>
-					<version>2.9</version>
-					<configuration>
-						<sourceExcludes>
-							<sourceExclude>**/.svn/</sourceExclude>
-						</sourceExcludes>
-						<downloadSources>true</downloadSources>
-					</configuration>
-				</plugin>
-
 				<!-- dependency插件 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -198,9 +166,6 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
 					<version>2.3.2</version>
-					<configuration>
-						<tagBase>http://10.18.96.95:8099/svn/cncm/executor/tags</tagBase>
-					</configuration>
 				</plugin>
 
 				<!-- sonar插件 -->
@@ -212,10 +177,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	
-	<!-- svn信息 -->
-	<scm>
-		<connection>scm:svn:http://10.18.96.95:8099/svn/cncm/executor/trunk/</connection>
-		<developerConnection>scm:svn:http://10.18.96.95:8099/svn/cncm/executor/trunk/</developerConnection>
-	</scm>
 </project>
